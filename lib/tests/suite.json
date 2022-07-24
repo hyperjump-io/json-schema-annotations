@@ -1,0 +1,111 @@
+[
+  {
+    "title": "Simple `title`",
+    "schema": {
+      "title": "Foo"
+    },
+    "subjects": [
+      {
+        "title": "Empty object",
+        "instance": {},
+        "assertions": [
+          {
+            "location": "#",
+            "keyword": "title",
+            "operation": "EQUALS",
+            "expected": ["Foo"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Multiple `title`s",
+    "schema": {
+      "allOf": [
+        { "title": "Foo" },
+        { "title": "Bar" }
+      ]
+    },
+    "subjects": [
+      {
+        "title": "Empty object",
+        "instance": {},
+        "assertions": [
+          {
+            "location": "#",
+            "keyword": "title",
+            "operation": "EQUALS",
+            "expected": ["Bar", "Foo"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Sub-schema `title`",
+    "schema": {
+      "properties": {
+        "foo": { "title": "Foo" }
+      }
+    },
+    "subjects": [
+      {
+        "title": "With value",
+        "instance": {
+          "foo": {},
+          "bar": {}
+        },
+        "assertions": [
+          {
+            "location": "#/foo",
+            "keyword": "title",
+            "operation": "EQUALS",
+            "expected": ["Foo"]
+          },
+          {
+            "location": "#/bar",
+            "keyword": "title",
+            "operation": "EQUALS",
+            "expected": []
+          }
+        ]
+      },
+      {
+        "title": "Without value",
+        "instance": {},
+        "assertions": [
+          {
+            "location": "#/foo",
+            "keyword": "title",
+            "operation": "EQUALS",
+            "expected": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Schema with dropped annotations",
+    "schema": {
+      "title": "Foo",
+      "not": {
+        "not": { "title": "Bar" }
+      }
+    },
+    "subjects": [
+      {
+        "title": "Any instance",
+        "instance": {},
+        "assertions": [
+          {
+            "location": "#",
+            "keyword": "title",
+            "operation": "EQUALS",
+            "expected": ["Foo"]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "name": "@hyperjump/json-schema-annotations",
+  "version": "0.0.1",
+  "description": "JSON Schema annotations",
+  "main": "lib/index.js",
+  "exports": {
+    "require": "./lib/index.js",
+    "import": "./lib/index.mjs"
+  },
+  "scripts": {
+    "clean": "xargs -a .gitignore rm -rf",
+    "lint": "eslint lib",
+    "build": "rollup --config rollup.config.js",
+    "test": "mocha 'lib/**/*.spec.js'"
+  },
+  "repository": "github:hyperjump-io/json-schema-annotations",
+  "keywords": [
+    "JSON Schema",
+    "annotations"
+  ],
+  "author": "Jason Desrosiers <jdesrosi@gmail.com>",
+  "license": "MIT",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/jdesrosiers"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "*",
+    "@rollup/plugin-node-resolve": "*",
+    "chai": "*",
+    "crypto-js": "*",
+    "eslint": "*",
+    "eslint-import-resolver-node": "*",
+    "eslint-plugin-import": "*",
+    "mocha": "*",
+    "rollup": "*"
+  },
+  "dependencies": {
+    "@hyperjump/json-schema": "^0.22.0"
+  }
+}
