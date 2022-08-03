@@ -11,7 +11,7 @@
     "clean": "xargs -a .gitignore rm -rf",
     "lint": "eslint lib",
     "build": "rollup --config rollup.config.js",
-    "test": "mocha 'lib/**/*.spec.js'"
+    "test": "mocha --require ts-node/register 'lib/**/*.spec.ts'"
   },
   "repository": "github:hyperjump-io/json-schema-annotations",
   "keywords": [
@@ -27,15 +27,20 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "*",
     "@rollup/plugin-node-resolve": "*",
+    "@types/chai": "*",
+    "@types/crypto-js": "*",
+    "@types/mocha": "*",
     "chai": "*",
     "crypto-js": "*",
     "eslint": "*",
     "eslint-import-resolver-node": "*",
+    "eslint-import-resolver-typescript": "*",
     "eslint-plugin-import": "*",
     "mocha": "*",
-    "rollup": "*"
+    "rollup": "*",
+    "ts-node": "*"
   },
   "dependencies": {
-    "@hyperjump/json-schema": "^0.22.0"
+    "@hyperjump/json-schema": "^0.23.0"
   }
 }

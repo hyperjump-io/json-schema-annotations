@@ -1,9 +1,29 @@
-const fs = require("fs");
-const { expect } = require("chai");
-const md5 = require("crypto-js/md5");
-const JsonSchema = require(".");
-const AnnotatedInstance = require("./annotated-instance");
+import fs from "fs";
+import { expect } from "chai";
+import md5 from "crypto-js/md5";
+import type { SchemaObject, Annotator } from ".";
+import JsonSchema from ".";
+import AnnotatedInstance from "./annotated-instance";
 
+
+type Suite = {
+  title: string;
+  schema: SchemaObject;
+  subjects: Subject[];
+};
+
+type Subject = {
+  title: string;
+  instance: unknown;
+  assertions: Assertion[];
+};
+
+type Assertion = {
+  location: string;
+  keyword: string;
+  operation: string;
+  expected: any[];
+};
 
 const host = "https://annotations.json-schema.hyperjump.io";
 const dialect = "https://json-schema.org/draft/2020-12/schema";
@@ -14,11 +34,11 @@ fs.readdirSync(testSuiteFilePath, { withFileTypes: true })
   .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
   .forEach((entry) => {
     const file = `${testSuiteFilePath}/${entry.name}`;
-    const suites = JSON.parse(fs.readFileSync(file, "utf8"));
+    const suites = JSON.parse(fs.readFileSync(file, "utf8")) as Suite[];
 
     suites.forEach((suite) => {
       describe(suite.title, () => {
-        let annotate;
+        let annotate: Annotator;
 
         beforeEach(async () => {
           const id = `${host}/${md5(JSON.stringify(suite.schema))}`;
@@ -30,7 +50,7 @@ fs.readdirSync(testSuiteFilePath, { withFileTypes: true })
 
         suite.subjects.forEach((subject) => {
           describe(subject.title, () => {
-            let instance;
+            let instance: any;
 
             beforeEach(() => {
               instance = annotate(subject.instance);
@@ -46,7 +66,7 @@ fs.readdirSync(testSuiteFilePath, { withFileTypes: true })
                     expect(annotations).to.eql(assertion.expected);
                     break;
                   default:
-                    throw Error(`Unknown operation '${subject.operation}'`);
+                    throw Error(`Unknown operation '${assertion.operation}'`);
                 }
               });
             });
