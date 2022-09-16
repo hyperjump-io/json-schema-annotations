@@ -4,7 +4,7 @@ import type { Json, JsonObject, JsonType } from "@hyperjump/json-schema";
 export type AnnotatedInstance = {
   annotate: (instance: AnnotatedJsonDocument, keyword: string, value: string) => AnnotatedJsonDocument;
   annotation: <A>(instance: AnnotatedJsonDocument, keyword: string) => A[];
-  annotatedWith: (instance: AnnotatedJsonDocument, keyword: string) => string[];
+  annotatedWith: (instance: AnnotatedJsonDocument, keyword: string) => AnnotatedJsonDocument[];
   nil: AnnotatedJsonDocument<undefined>;
   cons: (instance: Json, id?: string) => AnnotatedJsonDocument;
   get: (uri: string, context?: AnnotatedJsonDocument) => AnnotatedJsonDocument;
